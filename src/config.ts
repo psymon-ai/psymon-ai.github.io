@@ -1,7 +1,7 @@
 export const SITE = {
-  website: "https://github.com/psymon-ai/psymon.github.io.git", // replace this with your deployed domain
+  website: "https://psymon-ai.github.io", // GitHub Pages URL
   author: "psymon",
-  profile: "https://github.com/psymon-ai/psymon.github.io.git",
+  profile: "https://github.com/psymon-ai",
   desc: "A minimal, responsive and SEO-friendly Astro blog theme.",
   title: "psymon.dev",
   ogImage: "../public/About.png", // replace this with your og image path
