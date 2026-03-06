@@ -1,0 +1,93 @@
+---
+interface Props {
+  id: string;
+  title: string;
+  slug: string;
+}
+
+const { id, title, slug } = Astro.props;
+const GISCUS_REPO = import.meta.env.PUBLIC_GISCUS_REPO;
+const GISCUS_REPO_ID = import.meta.env.PUBLIC_GISCUS_REPO_ID;
+const GISCUS_CATEGORY = import.meta.env.PUBLIC_GISCUS_CATEGORY;
+const GISCUS_CATEGORY_ID = import.meta.env.PUBLIC_GISCUS_CATEGORY_ID;
+
+// Check if all required environment variables are set
+const isConfigured = !!(
+  GISCUS_REPO &&
+  GISCUS_REPO_ID &&
+  GISCUS_CATEGORY &&
+  GISCUS_CATEGORY_ID
+);
+---
+
+{
+  isConfigured ? (
+    <div id="giscus-container" class="giscus mt-12">
+      <script
+        src="https://giscus.app/client.js"
+        data-repo={GISCUS_REPO}
+        data-repo-id={GISCUS_REPO_ID}
+        data-category={GISCUS_CATEGORY}
+        data-category-id={GISCUS_CATEGORY_ID}
+        data-mapping="pathname"
+        data-strict="0"
+        data-reactions-enabled="1"
+        data-emit-metadata="0"
+        data-input-position="top"
+        data-theme="preferred_color_scheme"
+        data-lang="ko"
+        crossorigin="anonymous"
+        async
+      />
+    </div>
+  ) : (
+    <div class="mt-12 rounded border border-yellow-500 bg-yellow-50 p-4 text-yellow-800 dark:bg-yellow-900/20 dark:text-yellow-200">
+      <p>
+        Giscus 댓글 시스템이 설정되지 않았습니다. .env 파일에 환경 변수를
+        설정해주세요.
+      </p>
+    </div>
+  )
+}
+
+<style>
+  #giscus-container {
+    color-scheme: light dark;
+  }
+</style>
+
+<script is:inline>
+  function setupGiscusDarkMode() {
+    // Watch for theme changes
+    const observer = new MutationObserver(() => {
+      const theme = document.documentElement.getAttribute("data-theme");
+      const giscusTheme = theme === "dark" ? "dark" : "light";
+
+      // Send message to giscus iframe to change theme
+      const giscusIframe = document.querySelector("iframe.giscus-frame");
+      if (giscusIframe) {
+        const message = {
+          setConfig: {
+            theme: giscusTheme,
+          },
+        };
+        giscusIframe.contentWindow.postMessage(
+          { giscus: message },
+          "https://giscus.app"
+        );
+      }
+    });
+
+    observer.observe(document.documentElement, {
+      attributes: true,
+      attributeFilter: ["data-theme"],
+    });
+  }
+
+  // Setup observer when DOM is ready
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", setupGiscusDarkMode);
+  } else {
+    setupGiscusDarkMode();
+  }
+</script>

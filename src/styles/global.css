@@ -1,0 +1,132 @@
+@import "tailwindcss";
+@import "./typography.css";
+
+@custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *));
+
+:root,
+html[data-theme="light"] {
+  --background: #fdfdfd;
+  --foreground: #282728;
+  --accent: #006cac;
+  --muted: #e6e6e6;
+  --border: #ece9e9;
+}
+
+html[data-theme="dark"] {
+  --background: #212737;
+  --foreground: #eaedf3;
+  --accent: #ff6b01;
+  --muted: #343f60;
+  --border: #ab4b08;
+}
+
+@theme inline {
+  --font-app: var(--font-pretendard);
+  --font-heading: var(--font-hahmlet);
+  --font-code: var(--font-ibm-plex-sans);
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-accent: var(--accent);
+  --color-muted: var(--muted);
+  --color-border: var(--border);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-accent/75;
+    scrollbar-width: auto;
+    scrollbar-color: var(--color-muted) transparent;
+  }
+  html {
+    @apply overflow-y-scroll scroll-smooth;
+  }
+  body {
+    @apply flex min-h-svh flex-col bg-background font-app text-foreground selection:bg-accent/75 selection:text-background;
+  }
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: var(--font-hahmlet);
+  }
+  a,
+  button {
+    @apply outline-offset-1 outline-accent focus-visible:no-underline focus-visible:outline-2 focus-visible:outline-dashed;
+  }
+  button:not(:disabled),
+  [role="button"]:not(:disabled) {
+    cursor: pointer;
+  }
+}
+
+@utility max-w-app {
+  @apply max-w-3xl;
+}
+
+@utility app-layout {
+  @apply mx-auto w-full max-w-app px-4;
+}
+
+.active-nav {
+  @apply underline decoration-wavy decoration-2 underline-offset-8;
+}
+
+/* Source: https://piccalil.li/blog/a-more-modern-css-reset/ */
+/* Anything that has been anchored to should have extra scroll margin */
+:target {
+  scroll-margin-block: 1rem;
+}
+/* Table of Contents Sidebar Styles */
+.article-container {
+  @apply relative grid grid-cols-1 gap-8 lg:grid-cols-[1fr_300px];
+}
+
+.article-toc {
+  @apply hidden lg:block;
+  position: sticky;
+  top: 2rem;
+  max-height: calc(100vh - 2rem);
+  overflow-y: auto;
+  font-size: 0.875rem;
+  padding-right: 0.5rem;
+}
+
+.article-toc ul,
+.article-toc ol {
+  @apply list-none space-y-2;
+}
+
+.article-toc > ul,
+.article-toc > ol {
+  border-left: 2px solid var(--color-border);
+  padding-left: 1rem;
+}
+
+.article-toc li {
+  @apply m-0;
+}
+
+.article-toc a {
+  @apply block px-3 py-1 text-foreground/70 no-underline transition-colors hover:text-accent;
+  border-left: 2px solid transparent;
+  text-decoration: none;
+}
+
+.article-toc a:hover {
+  border-left-color: var(--color-accent);
+}
+
+.article-toc a.active-toc-link {
+  @apply font-medium text-accent;
+  border-left-color: var(--color-accent);
+}
+
+.article-toc > ul > li > a {
+  @apply font-medium;
+}
+
+.article-toc ul ul {
+  @apply ml-2;
+}
