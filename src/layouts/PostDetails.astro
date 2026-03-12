@@ -111,7 +111,7 @@ const nextPost =
     <div class="article-container">
       <article
         id="article"
-        class="app-prose mt-8 w-full max-w-app prose-pre:bg-(--shiki-light-bg) dark:prose-pre:bg-(--shiki-dark-bg)"
+        class="app-prose mt-8 w-full prose-pre:bg-(--shiki-light-bg) dark:prose-pre:bg-(--shiki-dark-bg)"
       >
         <Content />
       </article>
@@ -396,26 +396,57 @@ const nextPost =
     if (!article) return;
 
     const headings = article.querySelectorAll("h2, h3, h4, h5, h6");
-    const headingPositions = Array.from(headings)
-      .filter(h => h.id && !h.textContent.includes("Table of contents"))
-      .map(h => ({
-        id: h.id,
-        top: h.getBoundingClientRect().top,
-      }));
+    const headingElements = Array.from(headings).filter(
+      h => h.id && !h.textContent.includes("Table of contents")
+    );
 
-    // Find the current section
-    const current = headingPositions.find(h => h.top > -100);
+    if (headingElements.length === 0) return;
+
+    // Find the heading closest to the top of the viewport
+    const TOC_OFFSET = 112; // TOC의 top 값
+    let current = null;
+
+    for (const heading of headingElements) {
+      const rect = heading.getBoundingClientRect();
+      // 헤딩의 위치가 TOC 위치보다 아래에 있으면 현재 섹션
+      if (rect.top >= TOC_OFFSET) {
+        current = heading;
+        break;
+      }
+      // 마지막 헤딩까지 도달했으면 마지막 헤딩을 현재로 설정
+      current = heading;
+    }
 
     // Remove active class from all links
     tocLinks.forEach(link => link.classList.remove("active-toc-link"));
 
     // Add active class to current section link
     if (current) {
-      const activeLink = document.querySelector(
-        `#toc-nav a[href="#${current.id}"]`
-      );
+      let activeLink = null;
+
+      tocLinks.forEach(link => {
+        if (activeLink) return;
+        const href = link.getAttribute("href") || "";
+        const hashIndex = href.indexOf("#");
+        if (hashIndex === -1) return;
+
+        const rawHash = href.slice(hashIndex + 1);
+        let decodedHash = rawHash;
+        try {
+          decodedHash = decodeURIComponent(rawHash);
+        } catch {
+          decodedHash = rawHash;
+        }
+
+        if (decodedHash === current.id) {
+          activeLink = link;
+        }
+      });
+
       if (activeLink) {
         activeLink.classList.add("active-toc-link");
+        // TOC 활성화된 링크가 보이도록 스크롤
+        activeLink.scrollIntoView({ behavior: "smooth", block: "nearest" });
       }
     }
   }

@@ -3,7 +3,7 @@ export const SITE = {
   author: "psymon",
   profile: "https://github.com/psymon-ai",
   desc: "A minimal, responsive and SEO-friendly Astro blog theme.",
-  title: "psymon.dev",
+  title: "psymon.ai",
   ogImage: "../public/About.png", // replace this with your og image path
   lightAndDarkMode: true,
   postPerIndex: 8,

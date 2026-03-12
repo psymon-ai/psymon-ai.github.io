@@ -1,9 +1,4 @@
----
-layout: ../layouts/AboutLayout.astro
-title: "About Me"
----
-
-# psymon's blog
+# [블로그 바로가기](https://psymon-ai.github.io)
 
 ![Astro Paper](public/About-me.png)
 
@@ -14,7 +9,7 @@ title: "About Me"
 이력 사항이라기보단 그간 거쳐온 분야들이자 이 블로그의 글감들입니다.
 
 - Startup
-- LLM Fine-tuning
+- LLM(Large Language Mode)
 - Image processing
 - Frontend Development
 - Cross-platform development
