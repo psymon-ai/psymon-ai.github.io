@@ -10,6 +10,7 @@ html[data-theme="light"] {
   --accent: #006cac;
   --muted: #e6e6e6;
   --border: #ece9e9;
+  --font-pretendard: "Pretendard", system-ui, -apple-system, sans-serif;
 }
 
 html[data-theme="dark"] {

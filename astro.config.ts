@@ -14,6 +14,8 @@ import { SITE } from "./src/config";
 // https://astro.build/config
 export default defineConfig({
   site: SITE.website,
+  base: "/",
+  trailingSlash: "ignore",
   integrations: [
     sitemap({
       filter: page => SITE.showArchives || !page.endsWith("/archives"),
@@ -60,13 +62,6 @@ export default defineConfig({
   experimental: {
     preserveScriptOrder: true,
     fonts: [
-      {
-        name: "Pretendard",
-        cssVariable: "--font-pretendard",
-        provider: fontProviders.google(),
-        weights: [100, 200, 300, 400, 500, 600, 700, 800, 900],
-        styles: ["normal"],
-      },
       {
         name: "Hahmlet",
         cssVariable: "--font-hahmlet",

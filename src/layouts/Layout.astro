@@ -61,11 +61,9 @@ const structuredData = {
     <link rel="canonical" href={canonicalURL} />
     <meta name="generator" content={Astro.generator} />
 
+    
     <!-- Load Fonts -->
-    <Font
-      cssVariable="--font-pretendard"
-      preload={[{ subset: "latin", weight: 400, style: "normal" }]}
-    />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pretendard/dist/web/static/pretendard.css">
     <Font
       cssVariable="--font-hahmlet"
       preload={[{ subset: "latin", weight: 400, style: "normal" }]}
