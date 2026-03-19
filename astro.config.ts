@@ -10,6 +10,9 @@ import {
 } from "@shikijs/transformers";
 import { transformerFileName } from "./src/utils/transformers/fileName";
 import { SITE } from "./src/config";
+import rehypeExternalLinks from "rehype-external-links";
+import expressiveCode from 'astro-expressive-code';
+import { pluginLineNumbers } from '@expressive-code/plugin-line-numbers';
 
 // https://astro.build/config
 export default defineConfig({
@@ -20,12 +23,56 @@ export default defineConfig({
     sitemap({
       filter: page => SITE.showArchives || !page.endsWith("/archives"),
     }),
+    expressiveCode({
+      // 라인 넘버 활성화
+      plugins: [
+        pluginLineNumbers(),
+      ],
+
+      // 기본 props: wrap + line numbers 기본 ON
+      defaultProps: {
+        showLineNumbers: true,         // fence에 showLineNumbers 안 써도 기본으로 나옴
+        wrap: true,
+        preserveIndent: true,
+        overridesByLang: {
+          'bash,sh,zsh,shell,console': {
+            frame: 'code',      // 또는 'none'으로 프레임 자체 제거
+            // 필요하면 showLineNumbers: false 등도 추가 가능
+          },
+        },
+      },
+
+      // 스타일 커스텀 (uiLineNumbers 대신 lineNumbers 사용!)
+      styleOverrides: {
+        codePaddingBlock: '2.5rem', 
+        borderRadius: '0.8rem',
+        codeFontSize: '0.92rem',
+        lineNumbers: {
+          foreground: '#6e7681',          // VS Code 느낌 회색
+          highlightForeground: '#c9d1d9', // 강조 시 밝게
+        },
+      },
+
+      frames: true,
+
+      themes: ['github-dark-high-contrast'], // 또는 dracula 등
+    }),
   ],
   markdown: {
     remarkPlugins: [remarkToc, [remarkCollapse, { test: "Table of contents" }]],
+     rehypePlugins: [
+      [
+        rehypeExternalLinks,
+        {
+          target: "_blank",
+          rel: ["noopener", "noreferrer"],
+        },
+      ],
+    ],
+    syntaxHighlight: "shiki",
     shikiConfig: {
       // For more themes, visit https://shiki.style/themes
-      themes: { light: "min-light", dark: "night-owl" },
+      theme: "github-dark-high-contrast",
       defaultColor: false,
       wrap: false,
       transformers: [

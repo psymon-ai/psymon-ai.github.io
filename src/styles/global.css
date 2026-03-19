@@ -147,3 +147,28 @@ html[data-theme="dark"] {
 .article-toc ul ul {
   @apply ml-2;
 }
+
+/* 코드 블록 상단 "언어 표시" */
+pre[data-language]::before {
+  content: attr(data-language);
+  position: absolute;
+  top: 0.5rem;
+  left: 5rem;
+  font-size: 0.7rem;
+  color: #9ca3af;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+/* macOS 스타일 상단 점 */
+pre::after {
+  content: "";
+  position: absolute;
+  top: 0.6rem;
+  left: 0.75rem;
+  width: 56px;
+  height: 12px;
+  background: radial-gradient(circle at 6px 6px, #ff5f56 5px, transparent 6px),
+              radial-gradient(circle at 26px 6px, #ffbd2e 5px, transparent 6px),
+              radial-gradient(circle at 46px 6px, #27c93f 5px, transparent 6px);
+}

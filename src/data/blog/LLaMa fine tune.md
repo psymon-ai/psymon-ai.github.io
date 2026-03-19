@@ -11,7 +11,7 @@ tags:
   - Local AI
   - AI
   - Fine-tuning
-description: This is the example description of the example post.
+description: 안녕하세요. 올해 LLaMa 유출 사건 이후 로컬 Ai에 관심이 생겨 여러 시도를 했습니다. 그간 시행 착오를 정리했습니다.
 ---
 
 ## Table of contents

@@ -57,22 +57,47 @@ const isConfigured = !!(
 </style>
 
 <script is:inline>
+  let observerInitialized = false;
+
+  function renderGiscus() {
+    const container = document.getElementById("giscus-container");
+    if (!container) return;
+
+    // 중복 방지
+    if (container.firstChild) return;
+
+    const script = document.createElement("script");
+    script.src = "https://giscus.app/client.js";
+    script.async = true;
+
+    script.setAttribute("data-repo", container.dataset.repo);
+    script.setAttribute("data-repo-id", container.dataset.repoId);
+    script.setAttribute("data-category", container.dataset.category);
+    script.setAttribute("data-category-id", container.dataset.categoryId);
+    script.setAttribute("data-mapping", "pathname");
+    script.setAttribute("data-strict", "0");
+    script.setAttribute("data-reactions-enabled", "1");
+    script.setAttribute("data-emit-metadata", "0");
+    script.setAttribute("data-input-position", "top");
+    script.setAttribute("data-theme", "preferred_color_scheme");
+    script.setAttribute("data-lang", "ko");
+    script.crossOrigin = "anonymous";
+
+    container.appendChild(script);
+  }
+
   function setupGiscusDarkMode() {
-    // Watch for theme changes
+    if (observerInitialized) return;
+    observerInitialized = true;
+
     const observer = new MutationObserver(() => {
       const theme = document.documentElement.getAttribute("data-theme");
       const giscusTheme = theme === "dark" ? "dark" : "light";
 
-      // Send message to giscus iframe to change theme
-      const giscusIframe = document.querySelector("iframe.giscus-frame");
-      if (giscusIframe) {
-        const message = {
-          setConfig: {
-            theme: giscusTheme,
-          },
-        };
-        giscusIframe.contentWindow.postMessage(
-          { giscus: message },
+      const iframe = document.querySelector("iframe.giscus-frame");
+      if (iframe) {
+        iframe.contentWindow.postMessage(
+          { giscus: { setConfig: { theme: giscusTheme } } },
           "https://giscus.app"
         );
       }
@@ -84,10 +109,14 @@ const isConfigured = !!(
     });
   }
 
-  // Setup observer when DOM is ready
-  if (document.readyState === "loading") {
-    document.addEventListener("DOMContentLoaded", setupGiscusDarkMode);
-  } else {
+  function initGiscus() {
+    renderGiscus();
     setupGiscusDarkMode();
   }
+
+  // 최초 로드
+  document.addEventListener("DOMContentLoaded", initGiscus);
+
+  // SPA 이동 대응 (🔥 핵심)
+  document.addEventListener("astro:page-load", initGiscus);
 </script>
