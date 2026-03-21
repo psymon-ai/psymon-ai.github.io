@@ -172,3 +172,38 @@ pre::after {
               radial-gradient(circle at 26px 6px, #ffbd2e 5px, transparent 6px),
               radial-gradient(circle at 46px 6px, #27c93f 5px, transparent 6px);
 }
+
+/* 볼드체 Weight 변경 */
+strong,
+b,
+.markdown-body strong,
+.markdown-body b,
+.prose strong,
+.prose b {
+  font-weight: 800 !important;   /* 700 → 800 또는 900으로 올리면 확실히 굵어짐 */
+  /* 또는 font-weight: 900; 으로 더 강하게 */
+}
+
+/* 인용문(blockquote) 앞의 자동 따옴표 제거 */
+blockquote {
+  quotes: none !important;           /* 인용 부호 자체 비활성화 */
+}
+
+blockquote::before,
+blockquote::after {
+  content: none !important;          /* ::before에 들어가는 " 제거 */
+}
+
+/* 필요 시 기존 인용 스타일 유지하면서만 따옴표만 없애기 */
+.prose blockquote,
+.markdown-body blockquote {
+  position: relative;
+  padding-left: 1.25rem;
+  border-left: 4px solid var(--color-accent);  /* 기존 스타일 유지 예시 */
+  color: var(--color-foreground/80);
+}
+
+.prose blockquote p:first-child::before,
+.prose blockquote p::before {
+  content: none !important;
+}

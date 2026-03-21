@@ -13,6 +13,8 @@ import { SITE } from "./src/config";
 import rehypeExternalLinks from "rehype-external-links";
 import expressiveCode from 'astro-expressive-code';
 import { pluginLineNumbers } from '@expressive-code/plugin-line-numbers';
+import remarkMath from 'remark-math';
+import rehypeKatex from 'rehype-katex';
 
 // https://astro.build/config
 export default defineConfig({
@@ -59,29 +61,26 @@ export default defineConfig({
     }),
   ],
   markdown: {
-    remarkPlugins: [remarkToc, [remarkCollapse, { test: "Table of contents" }]],
-     rehypePlugins: [
-      [
-        rehypeExternalLinks,
-        {
-          target: "_blank",
-          rel: ["noopener", "noreferrer"],
-        },
-      ],
+    gfm: true,
+    remarkPlugins: [
+      remarkToc, 
+      remarkMath, // 수식 지원 추가
+      [remarkCollapse, { test: "Table of contents" }], 
     ],
-    syntaxHighlight: "shiki",
-    shikiConfig: {
-      // For more themes, visit https://shiki.style/themes
-      theme: "github-dark-high-contrast",
-      defaultColor: false,
-      wrap: false,
-      transformers: [
-        transformerFileName({ style: "v2", hideDot: false }),
-        transformerNotationHighlight(),
-        transformerNotationWordHighlight(),
-        transformerNotationDiff({ matchAlgorithm: "v3" }),
-      ],
-    },
+    rehypePlugins: [rehypeKatex],
+    // syntaxHighlight: "shiki",
+    // shikiConfig: {
+    //   // For more themes, visit https://shiki.style/themes
+    //   theme: "github-dark-high-contrast",
+    //   defaultColor: false,
+    //   wrap: false,
+    //   transformers: [
+    //     transformerFileName({ style: "v2", hideDot: false }),
+    //     transformerNotationHighlight(),
+    //     transformerNotationWordHighlight(),
+    //     transformerNotationDiff({ matchAlgorithm: "v3" }),
+    //   ],
+    // },
   },
   vite: {
     // eslint-disable-next-line
