@@ -44,7 +44,7 @@ export default defineConfig({
         },
       },
 
-      // 스타일 커스텀 (uiLineNumbers 대신 lineNumbers 사용!)
+      // 스타일 커스텀
       styleOverrides: {
         codePaddingBlock: '2.5rem', 
         borderRadius: '0.8rem',
@@ -67,8 +67,8 @@ export default defineConfig({
       remarkMath, // 수식 지원 추가
       [remarkCollapse, { test: "Table of contents" }], 
     ],
-    rehypePlugins: [rehypeKatex],
-    // syntaxHighlight: "shiki",
+    rehypePlugins: [rehypeKatex], 
+    // syntaxHighlight: "shiki", // Shiki 대신 Expressive Code로 대체
     // shikiConfig: {
     //   // For more themes, visit https://shiki.style/themes
     //   theme: "github-dark-high-contrast",
