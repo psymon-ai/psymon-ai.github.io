@@ -2,9 +2,9 @@ export const SITE = {
   website: "https://psymon-ai.github.io", // GitHub Pages URL
   author: "psymon",
   profile: "https://github.com/psymon-ai",
-  desc: "A minimal, responsive and SEO-friendly Astro blog theme.",
+  desc: "로컬 AI와 LLM을 직접 만들고, 이해하는 과정을 기록한 psymon의 개발 블로그입니다.",
   title: "psymon-ai",
-  ogImage: "../public/About-me.png", // replace this with your og image path
+  ogImage: "About-me.png", // /public 폴더 기준 파일명
   lightAndDarkMode: true,
   postPerIndex: 8,
   postPerPage: 8,
