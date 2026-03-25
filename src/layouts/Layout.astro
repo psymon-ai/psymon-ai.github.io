@@ -1,7 +1,7 @@
 ---
 import { Font } from "astro:assets";
 import { ClientRouter } from "astro:transitions";
-import { PUBLIC_GOOGLE_SITE_VERIFICATION } from "astro:env/client";
+import { PUBLIC_GOOGLE_SITE_VERIFICATION, PUBLIC_GA_MEASUREMENT_ID, PUBLIC_GOATCOUNTER_SITE } from "astro:env/client";
 import { SITE } from "@/config";
 import "@/styles/global.css";
 
@@ -151,6 +151,42 @@ const structuredData = {
     }
 
     <ClientRouter />
+
+    <!-- Google Analytics 4 -->
+    {
+      PUBLIC_GA_MEASUREMENT_ID && (
+        <script
+          is:inline
+          async
+          src={`https://www.googletagmanager.com/gtag/js?id=${PUBLIC_GA_MEASUREMENT_ID}`}
+        />
+      )
+    }
+    {
+      PUBLIC_GA_MEASUREMENT_ID && (
+        <script
+          is:inline
+          set:html={`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', '${PUBLIC_GA_MEASUREMENT_ID}');
+          `}
+        />
+      )
+    }
+
+    <!-- GoatCounter Analytics -->
+    {
+      PUBLIC_GOATCOUNTER_SITE && (
+        <script
+          is:inline
+          data-goatcounter={`https://${PUBLIC_GOATCOUNTER_SITE}.goatcounter.com/count`}
+          async
+          src="//gc.zgo.at/count.js"
+        />
+      )
+    }
 
     <!-- Minimal inline script to prevent FOUC - sets theme immediately -->
     <script is:inline>

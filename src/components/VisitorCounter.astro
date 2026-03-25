@@ -1,0 +1,75 @@
+---
+/**
+ * VisitorCounter - GoatCounter를 이용한 총 방문자 수 + 오늘 방문자 수 표시
+ * Footer에 배치하여 사이트 전체 통계를 보여줌
+ */
+import IconUsers from "@/assets/icons/IconUsers.svg";
+---
+
+<div class="visitor-counter flex items-center justify-center gap-4 text-sm opacity-70 my-2">
+  <span class="inline-flex items-center gap-1">
+    <IconUsers class="inline-block size-4" />
+    <span>총 방문:</span>
+    <span id="total-visitors" class="font-medium">-</span>
+  </span>
+  <span class="text-muted">|</span>
+  <span class="inline-flex items-center gap-1">
+    <span>오늘:</span>
+    <span id="today-visitors" class="font-medium">-</span>
+  </span>
+</div>
+
+<script is:inline data-astro-rerun>
+  (function () {
+    function loadVisitorStats() {
+      const totalEl = document.getElementById("total-visitors");
+      const todayEl = document.getElementById("today-visitors");
+      if (!totalEl || !todayEl) return;
+
+      // GoatCounter script에서 site code 추출
+      const gcScript = document.querySelector("script[data-goatcounter]");
+      if (!gcScript) {
+        totalEl.textContent = "-";
+        todayEl.textContent = "-";
+        return;
+      }
+
+      const gcUrl = gcScript.getAttribute("data-goatcounter");
+      if (!gcUrl) return;
+
+      const baseUrl = gcUrl.replace("/count", "");
+
+      // 총 방문자 수 가져오기 (전체 사이트)
+      fetch(`${baseUrl}/counter/TOTAL.json`)
+        .then(res => {
+          if (!res.ok) throw new Error("Not found");
+          return res.json();
+        })
+        .then(data => {
+          totalEl.textContent = data.count_unique || data.count || "0";
+        })
+        .catch(() => {
+          totalEl.textContent = "0";
+        });
+
+      // 오늘 방문자 수 가져오기
+      // GoatCounter API: /api/v1/stats/total?period-start=today&period-end=today
+      // 하지만 public API에서는 제한적이므로 counter API를 사용
+      const today = new Date().toISOString().split("T")[0]; // YYYY-MM-DD
+      fetch(`${baseUrl}/counter/TOTAL.json?period-start=${today}&period-end=${today}`)
+        .then(res => {
+          if (!res.ok) throw new Error("Not found");
+          return res.json();
+        })
+        .then(data => {
+          todayEl.textContent = data.count_unique || data.count || "0";
+        })
+        .catch(() => {
+          todayEl.textContent = "0";
+        });
+    }
+
+    loadVisitorStats();
+    document.addEventListener("astro:after-swap", loadVisitorStats);
+  })();
+</script>

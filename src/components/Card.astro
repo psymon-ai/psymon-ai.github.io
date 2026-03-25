@@ -3,6 +3,7 @@ import type { CollectionEntry } from "astro:content";
 import { slugifyStr } from "@/utils/slugify";
 import { getPath } from "@/utils/getPath";
 import Datetime from "./Datetime.astro";
+import ViewCount from "./ViewCount.astro";
 
 type Props = {
   variant?: "h2" | "h3";
@@ -11,11 +12,12 @@ type Props = {
 const { variant: Heading = "h2", id, data, filePath } = Astro.props;
 
 const { title, description, ...props } = data;
+const postPath = getPath(id, filePath);
 ---
 
 <li class="my-6">
   <a
-    href={getPath(id, filePath)}
+    href={postPath}
     class:list={[
       "inline-block text-lg font-medium text-accent",
       "decoration-dashed underline-offset-4 hover:underline",
@@ -28,6 +30,9 @@ const { title, description, ...props } = data;
       {title}
     </Heading>
   </a>
-  <Datetime {...props} />
+  <div class="flex items-center gap-3">
+    <Datetime {...props} />
+    <ViewCount path={postPath} size="sm" />
+  </div>
   <p>{description}</p>
 </li>
