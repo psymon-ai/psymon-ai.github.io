@@ -23,6 +23,8 @@ jobs:
       PUBLIC_GISCUS_REPO_ID: ${{ secrets.PUBLIC_GISCUS_REPO_ID }}
       PUBLIC_GISCUS_CATEGORY: ${{ secrets.PUBLIC_GISCUS_CATEGORY }}
       PUBLIC_GISCUS_CATEGORY_ID: ${{ secrets.PUBLIC_GISCUS_CATEGORY_ID }}
+      PUBLIC_GA_MEASUREMENT_ID: G-DFDREEHM9Z
+      PUBLIC_GOATCOUNTER_SITE: psymon-ai
 
     steps:
       - name: Checkout
