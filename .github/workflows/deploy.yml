@@ -44,6 +44,15 @@ jobs:
       - name: Install dependencies
         run: pnpm install
 
+      - name: Create .env file
+        run: |
+          echo "PUBLIC_GISCUS_REPO=${{ secrets.PUBLIC_GISCUS_REPO }}" >> .env
+          echo "PUBLIC_GISCUS_REPO_ID=${{ secrets.PUBLIC_GISCUS_REPO_ID }}" >> .env
+          echo "PUBLIC_GISCUS_CATEGORY=${{ secrets.PUBLIC_GISCUS_CATEGORY }}" >> .env
+          echo "PUBLIC_GISCUS_CATEGORY_ID=${{ secrets.PUBLIC_GISCUS_CATEGORY_ID }}" >> .env
+          echo "PUBLIC_GA_MEASUREMENT_ID=${PUBLIC_GA_MEASUREMENT_ID}" >> .env
+          echo "PUBLIC_GOATCOUNTER_SITE=${PUBLIC_GOATCOUNTER_SITE}" >> .env
+
       - name: Build with Astro
         run: pnpm run build
 
