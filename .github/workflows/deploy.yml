@@ -19,10 +19,10 @@ jobs:
     runs-on: ubuntu-latest
     
     env:
-      PUBLIC_GISCUS_REPO: ${{ secrets.PUBLIC_GISCUS_REPO }}
-      PUBLIC_GISCUS_REPO_ID: ${{ secrets.PUBLIC_GISCUS_REPO_ID }}
-      PUBLIC_GISCUS_CATEGORY: ${{ secrets.PUBLIC_GISCUS_CATEGORY }}
-      PUBLIC_GISCUS_CATEGORY_ID: ${{ secrets.PUBLIC_GISCUS_CATEGORY_ID }}
+      PUBLIC_GISCUS_REPO: psymon-ai/psymon-ai.github.io
+      PUBLIC_GISCUS_REPO_ID: R_kgDORfpZDw
+      PUBLIC_GISCUS_CATEGORY: General
+      PUBLIC_GISCUS_CATEGORY_ID: DIC_kwDORfpZD84C3yAb
       PUBLIC_GA_MEASUREMENT_ID: G-DFDREEHM9Z
       PUBLIC_GOATCOUNTER_SITE: psymon-ai
 
@@ -46,10 +46,10 @@ jobs:
 
       - name: Create .env file
         run: |
-          echo "PUBLIC_GISCUS_REPO=${{ secrets.PUBLIC_GISCUS_REPO }}" >> .env
-          echo "PUBLIC_GISCUS_REPO_ID=${{ secrets.PUBLIC_GISCUS_REPO_ID }}" >> .env
-          echo "PUBLIC_GISCUS_CATEGORY=${{ secrets.PUBLIC_GISCUS_CATEGORY }}" >> .env
-          echo "PUBLIC_GISCUS_CATEGORY_ID=${{ secrets.PUBLIC_GISCUS_CATEGORY_ID }}" >> .env
+          echo "PUBLIC_GISCUS_REPO=${PUBLIC_GISCUS_REPO}" >> .env
+          echo "PUBLIC_GISCUS_REPO_ID=${PUBLIC_GISCUS_REPO_ID}" >> .env
+          echo "PUBLIC_GISCUS_CATEGORY=${PUBLIC_GISCUS_CATEGORY}" >> .env
+          echo "PUBLIC_GISCUS_CATEGORY_ID=${PUBLIC_GISCUS_CATEGORY_ID}" >> .env
           echo "PUBLIC_GA_MEASUREMENT_ID=${PUBLIC_GA_MEASUREMENT_ID}" >> .env
           echo "PUBLIC_GOATCOUNTER_SITE=${PUBLIC_GOATCOUNTER_SITE}" >> .env
 
