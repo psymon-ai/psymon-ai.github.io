@@ -4,6 +4,9 @@
  * CORS 문제 없음 (서버에서 직접 호출)
  */
 
+import { UMAMI_API_KEY } from "astro:env/server";
+import { PUBLIC_UMAMI_WEBSITE_ID } from "astro:env/client";
+
 const UMAMI_API_URL = "https://api.umami.is/v1";
 
 interface UmamiMetric {
@@ -25,8 +28,8 @@ let statsCache: UmamiStats | null = null;
 let todayStatsCache: UmamiStats | null = null;
 
 function getConfig() {
-  const websiteId = import.meta.env.PUBLIC_UMAMI_WEBSITE_ID;
-  const apiKey = import.meta.env.UMAMI_API_KEY;
+  const websiteId = PUBLIC_UMAMI_WEBSITE_ID;
+  const apiKey = UMAMI_API_KEY;
   return { websiteId, apiKey };
 }
 
