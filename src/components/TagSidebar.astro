@@ -1,0 +1,47 @@
+---
+/**
+ * TagSidebar - 태그 목록을 사이드바로 표시하는 컴포넌트
+ * Posts 목록 페이지와 PostDetails 페이지에서 사용
+ */
+import IconHash from "@/assets/icons/IconHash.svg";
+import { slugifyStr } from "@/utils/slugify";
+
+type Props = {
+  tags: { tag: string; tagName: string; count?: number }[];
+  activeTag?: string;
+  class?: string;
+};
+
+const { tags, activeTag, class: className = "" } = Astro.props;
+---
+
+<aside class:list={["tag-sidebar", className]}>
+  <h3 class="mb-3 text-sm font-semibold uppercase tracking-wider opacity-60">
+    Tags
+  </h3>
+  <ul class="flex flex-col gap-1">
+    {
+      tags.map(({ tag, tagName, count }) => (
+        <li>
+          <a
+            href={`/tags/${tag}/`}
+            class:list={[
+              "flex items-center gap-1 rounded-md px-2 py-1.5 text-sm transition-colors",
+              "hover:bg-accent/10 hover:text-accent",
+              {
+                "bg-accent/15 font-medium text-accent": activeTag === tag,
+                "text-foreground/70": activeTag !== tag,
+              },
+            ]}
+          >
+            <IconHash class="size-3.5 flex-shrink-0 opacity-60" />
+            <span class="truncate">{tagName}</span>
+            {count !== undefined && (
+              <span class="ml-auto text-xs opacity-50">{count}</span>
+            )}
+          </a>
+        </li>
+      ))
+    }
+  </ul>
+</aside>

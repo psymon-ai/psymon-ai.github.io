@@ -1,13 +1,15 @@
 ---
 import type { GetStaticPaths } from "astro";
 import { getCollection } from "astro:content";
-import Main from "@/layouts/Main.astro";
 import Layout from "@/layouts/Layout.astro";
 import Header from "@/components/Header.astro";
 import Footer from "@/components/Footer.astro";
+import Breadcrumb from "@/components/Breadcrumb.astro";
 import Card from "@/components/Card.astro";
 import Pagination from "@/components/Pagination.astro";
+import TagSidebar from "@/components/TagSidebar.astro";
 import getSortedPosts from "@/utils/getSortedPosts";
+import getTagsWithCount from "@/utils/getTagsWithCount";
 import { SITE } from "@/config";
 
 export const getStaticPaths = (async ({ paginate }) => {
@@ -16,15 +18,26 @@ export const getStaticPaths = (async ({ paginate }) => {
 }) satisfies GetStaticPaths;
 
 const { page } = Astro.props;
+
+const allPosts = await getCollection("blog", ({ data }) => !data.draft);
+const tagsWithCount = getTagsWithCount(allPosts);
 ---
 
 <Layout title={`Posts | ${SITE.title}`}>
   <Header />
-  <Main pageTitle="Posts" pageDesc="">
-    <ul>
-      {page.data.map(data => <Card {...data} />)}
-    </ul>
-  </Main>
+  <Breadcrumb />
+  <main id="main-content" class="app-layout pb-4">
+    <h1 class="text-2xl font-semibold sm:text-3xl">Posts</h1>
+    <p class="mt-2 mb-6 italic"></p>
+    <div class="posts-with-tags">
+      <div class="posts-content">
+        <ul>
+          {page.data.map(data => <Card {...data} />)}
+        </ul>
+      </div>
+      <TagSidebar tags={tagsWithCount} class="posts-tag-sidebar" />
+    </div>
+  </main>
 
   <Pagination {page} />
 

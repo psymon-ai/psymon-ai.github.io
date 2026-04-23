@@ -148,6 +148,71 @@ html[data-theme="dark"] {
   @apply ml-2;
 }
 
+/* ========== Posts Page: Tag Sidebar Layout ========== */
+.posts-with-tags {
+  @apply relative grid grid-cols-1 gap-8;
+  align-items: start;
+}
+
+@media (min-width: 1280px) {
+  .posts-with-tags {
+    @apply grid-cols-[250px_1fr];
+    width: calc(100% + 250px + 3rem);
+    margin-left: calc(-250px - 3rem);
+  }
+}
+
+.posts-content {
+  @apply w-full;
+  min-width: 0;
+  order: 2;
+}
+
+.posts-tag-sidebar {
+  @apply hidden xl:block;
+  flex-shrink: 0;
+  width: 250px;
+  position: sticky;
+  top: 80px;
+  max-height: calc(100vh - 100px);
+  overflow-y: auto;
+  order: 1;
+  padding-right: 1rem;
+}
+
+/* ========== PostDetails: Tag Sidebar Layout ========== */
+.post-detail-layout {
+  @apply relative mx-auto w-full max-w-3xl px-4;
+}
+
+@media (min-width: 1280px) {
+  .post-detail-layout {
+    @apply grid grid-cols-[250px_1fr];
+    max-width: calc(48rem + 250px + 3rem);
+    gap: 3rem;
+    align-items: start;
+  }
+}
+
+.post-main-content {
+  @apply relative w-full;
+  min-width: 0;
+  order: 2;
+}
+
+.post-tag-sidebar {
+  @apply hidden xl:block;
+  flex-shrink: 0;
+  width: 250px;
+  position: sticky;
+  top: 112px;
+  max-height: calc(100vh - 112px);
+  overflow-y: auto;
+  order: 1;
+  padding-right: 1rem;
+  margin-top: 4.75rem;
+}
+
 /* 코드 블록 상단 "언어 표시" */
 pre[data-language]::before {
   content: attr(data-language);

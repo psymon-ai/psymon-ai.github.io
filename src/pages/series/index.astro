@@ -1,0 +1,49 @@
+---
+import { getCollection } from "astro:content";
+import Layout from "@/layouts/Layout.astro";
+import Header from "@/components/Header.astro";
+import Footer from "@/components/Footer.astro";
+import Main from "@/layouts/Main.astro";
+import Datetime from "@/components/Datetime.astro";
+import { getUniqueSeries } from "@/utils/getSeries";
+import { SITE } from "@/config";
+
+const posts = await getCollection("blog");
+const seriesList = getUniqueSeries(posts);
+---
+
+<Layout title={`Series | ${SITE.title}`}>
+  <Header />
+  <Main pageTitle="Series" pageDesc="">
+    {
+      seriesList.length === 0 ? (
+        <p class="text-muted">아직 시리즈가 없습니다.</p>
+      ) : (
+        <ul class="grid gap-6">
+          {seriesList.map(series => (
+            <li>
+              <a
+                href={`/series/${series.slug}/`}
+                class="group block rounded-lg border border-border p-5 transition-colors hover:border-accent"
+              >
+                <h2 class="text-xl font-semibold text-accent group-hover:underline decoration-wavy underline-offset-4">
+                  {series.name}
+                </h2>
+                <div class="mt-2 flex items-center gap-3 text-sm opacity-70">
+                  <span>{series.postCount}개의 포스트</span>
+                  <span class="text-muted">·</span>
+                  <Datetime
+                    pubDatetime={series.latestDate}
+                    size="sm"
+                    class="inline-flex"
+                  />
+                </div>
+              </a>
+            </li>
+          ))}
+        </ul>
+      )
+    }
+  </Main>
+  <Footer />
+</Layout>
