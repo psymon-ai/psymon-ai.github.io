@@ -1,9 +1,10 @@
 ---
 /**
- * ViewCount - GoatCounter를 이용한 개별 글 조회수 표시 컴포넌트
- * 클라이언트 사이드에서 GoatCounter API를 호출하여 조회수를 가져옴
+ * ViewCount - Umami Analytics를 이용한 개별 글 조회수 표시 컴포넌트
+ * 빌드 타임에 서버사이드로 Umami API를 호출 (CORS 문제 없음, API Key 미노출)
  */
 import IconEye from "@/assets/icons/IconEye.svg";
+import { getPageViewCount } from "@/utils/umami";
 
 type Props = {
   /** 조회수를 가져올 페이지 경로 (e.g., "/posts/my-post") */
@@ -14,11 +15,11 @@ type Props = {
 };
 
 const { path, size = "sm", class: className = "" } = Astro.props;
+const viewCount = await getPageViewCount(path);
 ---
 
 <span
   class:list={["view-count inline-flex items-center gap-x-1 opacity-80", className]}
-  data-path={path}
 >
   <IconEye
     class:list={[
@@ -28,50 +29,6 @@ const { path, size = "sm", class: className = "" } = Astro.props;
   />
   <span
     class:list={["view-count-number text-sm", { "sm:text-base": size === "lg" }]}
-    >-</span
+    >{viewCount.toLocaleString()}</span
   >
 </span>
-
-<script is:inline data-astro-rerun>
-  (function () {
-    function loadViewCounts() {
-      const elements = document.querySelectorAll(".view-count");
-      if (elements.length === 0) return;
-
-      // GoatCounter site code 가져오기
-      const gcScript = document.querySelector("script[data-goatcounter]");
-      if (!gcScript) return;
-
-      const gcUrl = gcScript.getAttribute("data-goatcounter");
-      if (!gcUrl) return;
-
-      // Extract base URL: "https://SITE.goatcounter.com/count" → "https://SITE.goatcounter.com"
-      const baseUrl = gcUrl.replace("/count", "");
-
-      elements.forEach(el => {
-        const path = el.getAttribute("data-path");
-        if (!path) return;
-
-        const numberEl = el.querySelector(".view-count-number");
-        if (!numberEl) return;
-
-        // GoatCounter public counter API
-        fetch(`${baseUrl}/counter/${encodeURIComponent(path)}.json`)
-          .then(res => {
-            if (!res.ok) throw new Error("Not found");
-            return res.json();
-          })
-          .then(data => {
-            numberEl.textContent = data.count_unique || data.count || "0";
-          })
-          .catch(() => {
-            numberEl.textContent = "0";
-          });
-      });
-    }
-
-    // 초기 로드 및 페이지 전환 시 다시 실행
-    loadViewCounts();
-    document.addEventListener("astro:after-swap", loadViewCounts);
-  })();
-</script>
