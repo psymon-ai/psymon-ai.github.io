@@ -56,10 +56,15 @@ const structuredData = isArticle
         },
       ],
       publisher: {
-        "@type": "Person",
-        name: `${SITE.author}`,
+        "@type": "Organization",
+        name: `${SITE.title}`,
         url: `${SITE.website}`,
+        logo: {
+          "@type": "ImageObject",
+          url: `${SITE.website}/favicon.svg`,
+        },
       },
+      ...(keywords.length > 0 && { keywords }),
     }
   : {
       "@context": "https://schema.org",
@@ -130,6 +135,10 @@ const structuredData = isArticle
       href="https://cdn.jsdelivr.net/npm/katex@0.15.2/dist/katex.min.css"
     />
 
+    <!-- hreflang (monolingual self-referencing) -->
+    <link rel="alternate" hreflang="ko" href={canonicalURL} />
+    <link rel="alternate" hreflang="x-default" href={canonicalURL} />
+
     <!-- Article Published/Modified time -->
     {
       pubDatetime && (
@@ -146,6 +155,15 @@ const structuredData = isArticle
           content={modDatetime.toISOString()}
         />
       )
+    }
+    {
+      isArticle && profile && (
+        <meta property="article:author" content={profile} />
+      )
+    }
+    {
+      isArticle && keywords.length > 0 &&
+        keywords.map(tag => <meta property="article:tag" content={tag} />)
     }
 
     <!-- Twitter -->

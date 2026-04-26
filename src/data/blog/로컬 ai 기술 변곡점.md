@@ -8,9 +8,13 @@ featured: false
 draft: false
 tags:
   - LLM
-  - AI
   - LLaMa
   - Local AI
+keywords:
+  - 로컬 AI
+  - LLaMa 유출
+  - 오픈소스 LLM
+  - AI 기술 변곡점
 description: 여러분은 새로운 기술이 산업 전반, 더 나아가 우리 일상을 바꾸는 순간을 목격해보셨나요?
 ---
 

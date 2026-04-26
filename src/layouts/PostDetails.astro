@@ -39,6 +39,7 @@ const {
   modDatetime,
   timezone,
   tags,
+  keywords: postKeywords,
   hideEditPost,
 } = post.data;
 
@@ -72,7 +73,7 @@ const layoutProps = {
   canonicalURL,
   ogImage,
   scrollSmooth: true,
-  keywords: tags,
+  keywords: [...tags, ...(postKeywords ?? [])],
 };
 
 /* ========== Prev/Next Posts ========== */

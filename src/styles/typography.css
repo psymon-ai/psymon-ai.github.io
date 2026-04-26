@@ -54,20 +54,51 @@
 
     /* Any paragraph that contains images becomes a responsive grid.
        - 1장일 때는 그대로 한 줄
-       - 2장 이상일 때는 자동으로 여러 열로 배치*/
-    p:has(img) {
+       - 2장 이상일 때는 자동으로 여러 열로 배치
+       - 캡션(<em>)이 포함된 경우 그리드 해제 → 세로 배치 */
+    p:has(img):not(:has(em)),
+    p:has(picture):not(:has(em)) {
       display: grid;
       gap: 1rem;
     }
 
     @media (min-width: 768px) {
-      p:has(img) {
+      p:has(img):not(:has(em)),
+      p:has(picture):not(:has(em)) {
         grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
       }
     }
 
+    /* 이미지 + 캡션이 같은 <p> 안에 있을 때 세로 배치 */
+    p:has(img):has(em),
+    p:has(picture):has(em) {
+      display: block;
+    }
+
+    p:has(img) > em,
+    p:has(picture) > em {
+      display: block;
+      text-align: center;
+      font-size: 0.875rem;
+      font-style: normal;
+      opacity: 0.6;
+      margin-top: 0.5rem;
+    }
+
     figcaption {
       @apply opacity-75;
+    }
+
+    figure.image-with-caption {
+      @apply my-6;
+    }
+
+    figure.image-with-caption img {
+      @apply mx-auto border-0;
+    }
+
+    figure.image-with-caption figcaption {
+      @apply mt-2 text-center text-sm opacity-60;
     }
 
     table {

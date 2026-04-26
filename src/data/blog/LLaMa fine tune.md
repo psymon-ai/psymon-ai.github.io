@@ -7,10 +7,15 @@ slug: llama-fine-tuning
 featured: false
 draft: false
 tags:
+  - LLM
   - LLaMa
   - Local AI
-  - AI
   - Fine-tuning
+keywords:
+  - LLaMa 파인튜닝
+  - LLM 파인튜닝 방법
+  - 로컬 AI 파인튜닝
+  - LLaMa fine-tuning 한국어
 description: LLaMa 유출 사건 이후 로컬 Ai에 관심이 생겨 여러 시도를 했습니다. 그간 시행 착오를 정리했습니다.
 ---
 
@@ -296,5 +301,4 @@ Colab으로 8시간만에 만든 모델치고는 번역 품질이 괜찮습니�
 위 과정을 본인이 원하는 데이터로 바꾸면 Polyglot 모델을 쉽고 다양하게 활용할 수 있을 것입니다. 
 <br /><br />
 <br /><br />
-
 

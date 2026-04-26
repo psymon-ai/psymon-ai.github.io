@@ -9,8 +9,12 @@ draft: false
 tags:
   - Startup
   - LLM
-  - AI
   - LLaMA
+keywords:
+  - AI 개발
+  - 로컬 AI 개발
+  - LLM 개발 시작
+  - AI 스타트업
 description: 2023년 어느 밤, 나는 외장하드에 120GB가 넘는 파일을 황급히 다운로드하고 있었다.
 ---
 

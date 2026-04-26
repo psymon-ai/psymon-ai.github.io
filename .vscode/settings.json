@@ -1,0 +1,12 @@
+{
+  "[markdown]": {
+    "editor.quickSuggestions": {
+      "other": true,
+      "comments": false,
+      "strings": false
+    },
+    "editor.snippetSuggestions": "top",
+    "editor.suggest.showSnippets": true
+  },
+  "markdown.suggest.paths.enabled": false
+}

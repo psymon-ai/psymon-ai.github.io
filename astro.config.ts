@@ -15,6 +15,8 @@ import expressiveCode from 'astro-expressive-code';
 import { pluginLineNumbers } from '@expressive-code/plugin-line-numbers';
 import remarkMath from 'remark-math';
 import rehypeKatex from 'rehype-katex';
+import rehypeImageCaption from './src/utils/rehype/imageCaption';
+import { remarkFixCjkBold } from './src/utils/remark/remarkFixCjkBold';
 
 // https://astro.build/config
 export default defineConfig({
@@ -63,11 +65,16 @@ export default defineConfig({
   markdown: {
     gfm: true,
     remarkPlugins: [
-      remarkToc, 
+      remarkFixCjkBold, // **볼드**+CJK 문자 조합 수정
+      remarkToc,
       remarkMath, // 수식 지원 추가
-      [remarkCollapse, { test: "Table of contents" }], 
+      [remarkCollapse, { test: "Table of contents" }],
     ],
-    rehypePlugins: [rehypeKatex], 
+    rehypePlugins: [
+      rehypeKatex,
+      rehypeImageCaption,
+      [rehypeExternalLinks, { target: "_blank", rel: ["noopener", "noreferrer"] }],
+    ],
     // syntaxHighlight: "shiki", // Shiki 대신 Expressive Code로 대체
     // shikiConfig: {
     //   // For more themes, visit https://shiki.style/themes

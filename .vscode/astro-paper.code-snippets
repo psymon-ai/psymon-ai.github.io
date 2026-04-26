@@ -1,11 +1,12 @@
 {
   "Image (assets/images)": {
     "scope": "markdown",
-    "prefix": "!",
+    "prefix": ["!", "img", "image"],
     "body": [
       "![$1](@/assets/images/$1)"
     ],
-    "description": "이미지 삽입 - 파일명만 입력 (경로는 @/assets/images/ 로 항상 동일)"
+    "description": "이미지 삽입 - 파일명만 입력하면 alt와 경로에 동시 반영",
+    "isFileTemplate": true
   },
   "Frontmatter": {
     "scope": "markdown",
@@ -19,7 +20,9 @@
       "draft: ${4|false,true|}",
       "tags:",
       "  - $5",
-      "description: $6",
+      "keywords:",
+      "  - $6",
+      "description: $7",
       "---",
     ],
     "description": "Adds the frontmatter block for the AstroPaper Blog post"
@@ -52,7 +55,9 @@
       "draft: ${4|false,true|}",
       "tags:",
       "  - ${5:tag}",
-      "description: ${7:This is the example description of the example post.}",
+      "keywords:",
+      "  - ${6:keyword}",
+      "description: ${7:포스트 설명을 입력하세요.}",
       "---",
       "",
       "## Table of contents",
