@@ -50,9 +50,7 @@
     "prettier-plugin-tailwindcss": "^0.7.2",
     "typescript": "^5.9.3",
     "typescript-eslint": "^8.51.0",
-    "unified": "^11.0.5",
-    "unist-util-visit": "^5.0.0",
-    "@types/mdast": "^4.0.0"
+    "unified": "^11.0.5"
   },
   "overrides": {
     "lodash": "^4.17.23",

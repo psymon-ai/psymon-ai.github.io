@@ -242,12 +242,30 @@ pre::after {
 /* 볼드체 Weight 변경 */
 strong,
 b,
+.app-prose strong,
+.app-prose b,
 .markdown-body strong,
 .markdown-body b,
 .prose strong,
 .prose b {
-  font-weight: 800 !important;   /* 700 → 800 또는 900으로 올리면 확실히 굵어짐 */
-  /* 또는 font-weight: 900; 으로 더 강하게 */
+  font-weight: 800 !important;
+}
+
+strong .katex .katex-html,
+b .katex .katex-html,
+.app-prose strong .katex .katex-html,
+.app-prose b .katex .katex-html,
+strong .katex .katex-html *,
+b .katex .katex-html *,
+.app-prose strong .katex .katex-html *,
+.app-prose b .katex .katex-html *,
+.markdown-body strong .katex .katex-html,
+.markdown-body b .katex .katex-html,
+.prose strong .katex .katex-html,
+.prose b .katex .katex-html {
+  text-shadow:
+    0.014em 0 0 currentColor,
+    -0.006em 0 0 currentColor;
 }
 
 /* 인용문(blockquote) 앞의 자동 따옴표 제거 */

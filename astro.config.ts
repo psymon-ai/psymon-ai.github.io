@@ -65,9 +65,9 @@ export default defineConfig({
   markdown: {
     gfm: true,
     remarkPlugins: [
-      remarkFixCjkBold, // **볼드**+CJK 문자 조합 수정
       remarkToc,
-      remarkMath, // 수식 지원 추가
+      remarkMath,
+      remarkFixCjkBold,
       [remarkCollapse, { test: "Table of contents" }],
     ],
     rehypePlugins: [
