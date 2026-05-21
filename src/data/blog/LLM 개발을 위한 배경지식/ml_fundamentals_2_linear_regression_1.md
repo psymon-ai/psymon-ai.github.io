@@ -9,9 +9,9 @@ draft: false
 tags:
   - Theory
   - Machine Learning
-  - Linear Regression
 keywords:
   - 선형 회귀
+  - Linear Regression
   - 머신러닝 기초
   - 최소 제곱법
   - RSS

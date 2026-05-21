@@ -9,9 +9,9 @@ draft: false
 tags:
   - Theory
   - Machine Learning
-  - Linear Regression
 keywords:
   - 선형 회귀
+  - Linear Regression
   - 머신러닝 기초
   - 범주형 변수
   - 원-핫 인코딩

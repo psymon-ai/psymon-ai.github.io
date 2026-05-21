@@ -4,7 +4,7 @@ on:
   push:
     branches: [main]
   schedule:
-    - cron: '0 15 * * *'  # 매일 KST 00:00 (UTC 15:00) 자동 재빌드
+    - cron: "0 15 * * *" # 매일 KST 00:00 (UTC 15:00) 자동 재빌드
   workflow_dispatch:
 
 permissions:
@@ -19,7 +19,7 @@ concurrency:
 jobs:
   build:
     runs-on: ubuntu-latest
-    
+
     env:
       PUBLIC_GISCUS_REPO: psymon-ai/psymon-ai.github.io
       PUBLIC_GISCUS_REPO_ID: R_kgDOSFydGw
@@ -37,7 +37,7 @@ jobs:
       - name: Setup pnpm
         uses: pnpm/action-setup@v4
         with:
-          version: latest
+          version: 10.11.1
 
       - name: Setup Node
         uses: actions/setup-node@v4
