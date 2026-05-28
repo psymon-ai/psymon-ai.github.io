@@ -7,17 +7,25 @@ import ViewCount from "./ViewCount.astro";
 
 type Props = {
   variant?: "h2" | "h3";
+  navContext?: "posts" | "series";
 } & CollectionEntry<"blog">;
 
-const { variant: Heading = "h2", id, data, filePath } = Astro.props;
+const {
+  variant: Heading = "h2",
+  navContext = "posts",
+  id,
+  data,
+  filePath,
+} = Astro.props;
 
 const { title, description, ...props } = data;
 const postPath = getPath(id, filePath);
+const postHref = `${postPath}${navContext === "series" ? "?nav=series" : ""}`;
 ---
 
 <li class="my-6">
   <a
-    href={postPath}
+    href={postHref}
     class:list={[
       "inline-block text-lg font-medium text-accent",
       "decoration-dashed underline-offset-4 hover:underline",

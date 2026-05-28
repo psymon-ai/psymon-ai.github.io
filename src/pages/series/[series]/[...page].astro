@@ -37,7 +37,7 @@ const { page, seriesName } = Astro.props;
     pageDesc={`총 ${page.total}개의 포스트`}
   >
     <ul>
-      {page.data.map(data => <Card {...data} />)}
+      {page.data.map(data => <Card navContext="series" {...data} />)}
     </ul>
   </Main>
 

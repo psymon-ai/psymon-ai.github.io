@@ -17,6 +17,7 @@ import IconChevronLeft from "@/assets/icons/IconChevronLeft.svg";
 import IconChevronRight from "@/assets/icons/IconChevronRight.svg";
 import TagSidebar from "@/components/TagSidebar.astro";
 import getTagsWithCount from "@/utils/getTagsWithCount";
+import { getPostsBySeries, getSeriesFromPost } from "@/utils/getSeries";
 import { SITE } from "@/config";
 
 type Props = {
@@ -78,17 +79,72 @@ const layoutProps = {
 
 /* ========== Prev/Next Posts ========== */
 
-const allPostLinks = posts.map(({ data: { title }, id, filePath }) => ({
-  id,
-  title,
-  filePath,
-}));
+type NavPost = {
+  id: string;
+  title: string;
+  filePath: string | undefined;
+};
+
+type NavMode = "posts" | "series";
+
+const toPostLinks = (postList: CollectionEntry<"blog">[]): NavPost[] =>
+  postList.map(({ data: { title }, id, filePath }) => ({
+    id,
+    title,
+    filePath,
+  }));
+
+const getNavPath = (navPost: NavPost, mode: NavMode) =>
+  `${getPath(navPost.id, navPost.filePath)}${mode === "series" ? "?nav=series" : ""}`;
+
+const allPostLinks = toPostLinks(posts);
 
 const currentPostIndex = allPostLinks.findIndex(a => a.id === post.id);
 
-const prevPost = currentPostIndex !== 0 ? allPostLinks[currentPostIndex - 1] : null;
-const nextPost =
-  currentPostIndex !== allPostLinks.length ? allPostLinks[currentPostIndex + 1] : null;
+const globalPrevPost =
+  currentPostIndex >= 0 && currentPostIndex < allPostLinks.length - 1
+    ? allPostLinks[currentPostIndex + 1]
+    : null;
+const globalNextPost =
+  currentPostIndex > 0 ? allPostLinks[currentPostIndex - 1] : null;
+
+const currentSeries = getSeriesFromPost(post.filePath);
+const seriesPostLinks = currentSeries
+  ? toPostLinks(getPostsBySeries(allPosts, currentSeries.slug))
+  : [];
+const currentSeriesPostIndex = seriesPostLinks.findIndex(a => a.id === post.id);
+const hasSeriesNav = currentSeriesPostIndex >= 0 && seriesPostLinks.length > 1;
+
+const seriesPrevPost =
+  hasSeriesNav && currentSeriesPostIndex > 0
+    ? seriesPostLinks[currentSeriesPostIndex - 1]
+    : null;
+const seriesNextPost =
+  hasSeriesNav && currentSeriesPostIndex < seriesPostLinks.length - 1
+    ? seriesPostLinks[currentSeriesPostIndex + 1]
+    : null;
+
+const navGroups: {
+  mode: NavMode;
+  prevPost: NavPost | null;
+  nextPost: NavPost | null;
+  hidden?: boolean;
+}[] = [
+  {
+    mode: "posts",
+    prevPost: globalPrevPost,
+    nextPost: globalNextPost,
+  },
+];
+
+if (hasSeriesNav) {
+  navGroups.push({
+    mode: "series",
+    prevPost: seriesPrevPost,
+    nextPost: seriesNextPost,
+    hidden: true,
+  });
+}
 ---
 
 <Layout {...layoutProps}>
@@ -158,42 +214,80 @@ const nextPost =
     <hr class="my-6 border-dashed" />
 
     <!-- Previous/Next Post Buttons -->
-    <div data-pagefind-ignore class="grid grid-cols-1 gap-6 sm:grid-cols-2">
-      {
-        prevPost && (
-          <a
-            href={getPath(prevPost.id, prevPost.filePath)}
-            class="flex w-full gap-1 hover:opacity-75"
-          >
-            <IconChevronLeft class="inline-block flex-none rtl:rotate-180" />
-            <div>
-              <span>Previous Post</span>
-              <div class="text-sm text-accent/85">{prevPost.title}</div>
-            </div>
-          </a>
-        )
-      }
-      {
-        nextPost && (
-          <a
-            href={getPath(nextPost.id, nextPost.filePath)}
-            class="flex w-full justify-end gap-1 text-end hover:opacity-75 sm:col-start-2"
-          >
-            <div>
-              <span>Next Post</span>
-              <div class="text-sm text-accent/85">{nextPost.title}</div>
-            </div>
-            <IconChevronRight class="inline-block flex-none rtl:rotate-180" />
-          </a>
-        )
-      }
-    </div>
+    {navGroups.map(({ mode, prevPost, nextPost, hidden }) => (
+      <div
+        data-pagefind-ignore
+        data-post-nav={mode}
+        class:list={["grid grid-cols-1 gap-6 sm:grid-cols-2", { hidden }]}
+      >
+        {
+          prevPost && (
+            <a
+              href={getNavPath(prevPost, mode)}
+              class="flex w-full gap-1 hover:opacity-75"
+            >
+              <IconChevronLeft class="inline-block flex-none rtl:rotate-180" />
+              <div>
+                <span>Previous Post</span>
+                <div class="text-sm text-accent/85">{prevPost.title}</div>
+              </div>
+            </a>
+          )
+        }
+        {
+          nextPost && (
+            <a
+              href={getNavPath(nextPost, mode)}
+              class="flex w-full justify-end gap-1 text-end hover:opacity-75 sm:col-start-2"
+            >
+              <div>
+                <span>Next Post</span>
+                <div class="text-sm text-accent/85">{nextPost.title}</div>
+              </div>
+              <IconChevronRight class="inline-block flex-none rtl:rotate-180" />
+            </a>
+          )
+        }
+      </div>
+    ))}
     </main>
   </div>
   <Footer />
 </Layout>
 
 <script is:inline data-astro-rerun>
+  function syncPostNavigation() {
+    const postNavs = document.querySelectorAll("[data-post-nav]");
+    if (!postNavs.length) return;
+
+    const hasSeriesNav = document.querySelector('[data-post-nav="series"]');
+    const url = new URL(window.location.href);
+    const requestedMode = url.searchParams.get("nav");
+    let referrerPath = "";
+
+    if (document.referrer) {
+      try {
+        const referrerUrl = new URL(document.referrer);
+        if (referrerUrl.origin === window.location.origin) {
+          referrerPath = referrerUrl.pathname;
+        }
+      } catch {
+        referrerPath = "";
+      }
+    }
+
+    const useSeriesNav =
+      hasSeriesNav &&
+      (requestedMode === "series" || referrerPath.startsWith("/series/"));
+    const activeMode = useSeriesNav ? "series" : "posts";
+
+    postNavs.forEach(nav => {
+      nav.classList.toggle("hidden", nav.dataset.postNav !== activeMode);
+    });
+  }
+
+  syncPostNavigation();
+
   /** Create a progress indicator
    *  at the top */
   function createProgressBar() {
