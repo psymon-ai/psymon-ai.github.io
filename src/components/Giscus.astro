@@ -5,7 +5,6 @@ interface Props {
   slug: string;
 }
 
-const { id, title, slug } = Astro.props;
 const GISCUS_REPO = import.meta.env.PUBLIC_GISCUS_REPO;
 const GISCUS_REPO_ID = import.meta.env.PUBLIC_GISCUS_REPO_ID;
 const GISCUS_CATEGORY = import.meta.env.PUBLIC_GISCUS_CATEGORY;
@@ -24,6 +23,7 @@ const isConfigured = !!(
   isConfigured ? (
     <div id="giscus-container" class="giscus mt-12">
       <script
+        is:inline
         src="https://giscus.app/client.js"
         data-repo={GISCUS_REPO}
         data-repo-id={GISCUS_REPO_ID}

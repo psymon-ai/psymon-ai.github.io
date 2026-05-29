@@ -284,7 +284,7 @@ blockquote::after {
   position: relative;
   padding-left: 1.25rem;
   border-left: 4px solid var(--color-accent);  /* 기존 스타일 유지 예시 */
-  color: var(--color-foreground/80);
+  color: color-mix(in srgb, var(--color-foreground) 80%, transparent);
 }
 
 .prose blockquote p:first-child::before,
