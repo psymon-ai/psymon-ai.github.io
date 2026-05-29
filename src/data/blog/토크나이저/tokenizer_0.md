@@ -2,7 +2,7 @@
 title: 토크나이저, 언어 모델의 보이지 않는 관문
 author: psymon
 pubDatetime: 2026-03-28T11:21:00Z
-modDatetime: 2026-03-28T00:00:00Z
+modDatetime: 2026-03-28T12:23:00Z
 slug: tokenizer-the-invisible-gate
 featured: true
 draft: false
