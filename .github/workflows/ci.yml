@@ -20,31 +20,35 @@ jobs:
 
     strategy:
       matrix:
-        node-version: [20]
+        node-version: [24]
+
+    env:
+      ASTRO_TELEMETRY_DISABLED: 1
+      COREPACK_ENABLE_DOWNLOAD_PROMPT: 0
 
     steps:
-      - name: "☁️ Checkout repository"
-        uses: actions/checkout@v4
-
-      - name: "📦 Install pnpm"
-        uses: pnpm/action-setup@v4
-        with:
-          version: 10.11.1
+      - name: Checkout repository
+        uses: actions/checkout@v6
 
       - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v6
         with:
           node-version: ${{ matrix.node-version }}
-          cache: "pnpm"
 
-      - name: "📦 Install dependencies"
-        run: pnpm install
+      - name: Enable pnpm with Corepack
+        run: |
+          corepack enable
+          corepack prepare pnpm@10.11.1 --activate
+          pnpm --version
 
-      - name: "🔎 Lint code"
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Lint code
         run: pnpm run lint
 
-      - name: "📝 Checking code format"
+      - name: Check code format
         run: pnpm run format:check
 
-      - name: "🚀 Build the project"
+      - name: Build the project
         run: pnpm run build

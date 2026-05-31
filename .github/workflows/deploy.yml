@@ -4,7 +4,7 @@ on:
   push:
     branches: [main]
   schedule:
-    - cron: "0 15 * * *" # 매일 KST 00:00 (UTC 15:00) 자동 재빌드
+    - cron: "0 15 * * *" # Daily KST 00:00 (UTC 15:00)
   workflow_dispatch:
 
 permissions:
@@ -21,6 +21,8 @@ jobs:
     runs-on: ubuntu-latest
 
     env:
+      ASTRO_TELEMETRY_DISABLED: 1
+      COREPACK_ENABLE_DOWNLOAD_PROMPT: 0
       PUBLIC_GISCUS_REPO: psymon-ai/psymon-ai.github.io
       PUBLIC_GISCUS_REPO_ID: R_kgDOSFydGw
       PUBLIC_GISCUS_CATEGORY: General
@@ -32,21 +34,21 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: Setup pnpm
-        uses: pnpm/action-setup@v4
-        with:
-          version: 10.11.1
+        uses: actions/checkout@v6
 
       - name: Setup Node
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v6
         with:
-          node-version: 20
-          cache: pnpm
+          node-version: 24
+
+      - name: Enable pnpm with Corepack
+        run: |
+          corepack enable
+          corepack prepare pnpm@10.11.1 --activate
+          pnpm --version
 
       - name: Install dependencies
-        run: pnpm install
+        run: pnpm install --frozen-lockfile
 
       - name: Create .env file
         run: |
@@ -63,7 +65,7 @@ jobs:
         run: pnpm run build
 
       - name: Upload Pages artifact
-        uses: actions/upload-pages-artifact@v3
+        uses: actions/upload-pages-artifact@v4
         with:
           path: ./dist
 
