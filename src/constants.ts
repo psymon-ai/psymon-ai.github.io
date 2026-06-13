@@ -1,6 +1,7 @@
 import type { Props } from "astro";
 import IconMail from "@/assets/icons/IconMail.svg";
 import IconGitHub from "@/assets/icons/IconGitHub.svg";
+import IconHuggingFace from "@/assets/icons/IconHuggingFace.svg";
 import IconBrandX from "@/assets/icons/IconBrandX.svg";
 import IconTelegram from "@/assets/icons/IconTelegram.svg";
 import { SITE } from "@/config";
@@ -18,6 +19,12 @@ export const SOCIALS: Social[] = [
     href: "https://github.com/psymon-ai",
     linkTitle: `${SITE.title} on GitHub`,
     icon: IconGitHub,
+  },
+  {
+    name: "Hugging Face",
+    href: "https://huggingface.co/psymon",
+    linkTitle: `${SITE.title} on Hugging Face`,
+    icon: IconHuggingFace,
   },
   // {
   //   name: "X",

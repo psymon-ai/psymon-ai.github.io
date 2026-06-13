@@ -171,6 +171,15 @@
       }
     }
 
+    table:has(thead th:nth-child(2):last-child) {
+      table-layout: fixed;
+
+      th:first-child,
+      td:first-child {
+        width: 34%;
+      }
+    }
+
     @media (max-width: 640px) {
       table {
         display: block;
