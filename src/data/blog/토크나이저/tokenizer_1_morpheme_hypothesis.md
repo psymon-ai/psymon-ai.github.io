@@ -1,8 +1,8 @@
 ---
 title: 한국어 토크나이저 실험기 1 - 형태소 가설이 무너지다
 author: psymon
-pubDatetime: 2026-04-10T01:34:12Z
-modDatetime: 2026-04-10T01:34:12Z
+pubDatetime: 2026-04-10T01:34:12+09:00
+modDatetime: 2026-04-10T01:34:12+09:00
 slug: korean-tokenizer-experiment-1-morpheme-hypothesis
 featured: true
 draft: false

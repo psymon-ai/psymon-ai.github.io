@@ -1,8 +1,8 @@
 ---
 title: 2. 선형 회귀 I
 author: psymon
-pubDatetime: 2026-04-02T16:10:00Z
-modDatetime: 2026-04-02T16:10:00Z
+pubDatetime: 2026-04-02T16:10:00+09:00
+modDatetime: 2026-04-02T16:10:00+09:00
 slug: ml-fundamentals-2-linear-regression-1
 featured: true
 draft: false

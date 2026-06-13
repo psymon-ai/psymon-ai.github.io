@@ -1,8 +1,8 @@
 ---
 title: 5. 분류 II - 판별 분석과 베이즈 분류기
 author: psymon
-pubDatetime: 2026-04-10T09:44:11Z
-modDatetime: 2026-04-10T09:44:11Z
+pubDatetime: 2026-04-10T09:44:11+09:00
+modDatetime: 2026-04-10T09:44:11+09:00
 slug: ml-fundamentals-5-classification-discriminant-analysis
 featured: true
 draft: false

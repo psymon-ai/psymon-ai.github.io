@@ -1,8 +1,8 @@
 ---
 title: 4. 분류 I — 로지스틱 회귀
 author: psymon
-pubDatetime: 2026-04-07T09:42:31Z
-modDatetime: 2026-04-07T09:42:31Z
+pubDatetime: 2026-04-07T09:42:31+09:00
+modDatetime: 2026-04-07T09:42:31+09:00
 slug: ml-fundamentals-4-classification-logistic-regression
 featured: true
 draft: false

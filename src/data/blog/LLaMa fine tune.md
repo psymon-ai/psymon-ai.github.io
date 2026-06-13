@@ -1,8 +1,8 @@
 ---
 title: LLaMa Fine-tuning
 author: psymon
-pubDatetime: 2023-06-20T19:47:59Z
-modDatetime: 2023-06-20T19:47:59Z
+pubDatetime: 2023-06-20T19:47:59+09:00
+modDatetime: 2023-06-20T19:47:59+09:00
 slug: llama-fine-tuning
 featured: false
 draft: false

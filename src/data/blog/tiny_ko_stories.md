@@ -1,8 +1,8 @@
-﻿---
+---
 title: Tiny-Ko-Stories - 한국어다운 데이터가 작은 모델을 바꿀 수 있을까
 author: psymon
-pubDatetime: 2026-06-14T00:24:25Z
-modDatetime: 2026-06-14T00:24:25Z
+pubDatetime: 2026-06-14T00:24:25+09:00
+modDatetime: 2026-06-14T00:24:25+09:00
 slug: tiny-ko-stories-korean-native-story-dataset
 featured: true
 draft: false

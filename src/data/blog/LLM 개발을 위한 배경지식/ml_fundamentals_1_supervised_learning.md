@@ -1,8 +1,8 @@
 ---
 title: 1. 지도 학습의 기초
 author: psymon
-pubDatetime: 2026-03-30T11:31:00Z
-modDatetime: 2026-03-30T11:31:00Z
+pubDatetime: 2026-03-30T11:31:00+09:00
+modDatetime: 2026-03-30T11:31:00+09:00
 slug: ml-fundamentals-1-supervised-learning
 featured: true
 draft: false

@@ -1,8 +1,8 @@
 ---
 title: 3. 선형 회귀 II
 author: psymon
-pubDatetime: 2026-04-04T02:26:00Z
-modDatetime: 2026-04-04T02:26:00Z
+pubDatetime: 2026-04-04T02:26:00+09:00
+modDatetime: 2026-04-04T02:26:00+09:00
 slug: ml-fundamentals-3-linear-regression-2
 featured: true
 draft: false

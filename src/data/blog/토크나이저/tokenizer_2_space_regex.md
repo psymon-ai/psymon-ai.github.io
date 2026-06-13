@@ -1,8 +1,8 @@
 ---
 title: 한국어 토크나이저 실험기 2 - 공백의 의미
 author: psymon
-pubDatetime: 2026-04-14T01:02:54Z
-modDatetime: 2026-04-14T01:02:54Z
+pubDatetime: 2026-04-14T01:02:54+09:00
+modDatetime: 2026-04-14T01:02:54+09:00
 slug: korean-tokenizer-experiment-2-space-regex
 featured: true
 draft: false

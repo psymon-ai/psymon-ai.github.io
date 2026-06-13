@@ -1,7 +1,7 @@
 ---
 author: psymon
-pubDatetime: 2023-04-04T15:33:05.569Z
-modDatetime: 2023-04-04T15:33:05.569Z
+pubDatetime: 2023-04-04T15:33:05.569+09:00
+modDatetime: 2023-04-04T15:33:05.569+09:00
 title: 로컬 AI - LLaMa 유출과 기술 변곡점
 slug: local-ai-llama-leak-and-technological-inflection-point
 featured: false

@@ -1,8 +1,8 @@
 ---
 title: AI 개발을 시작하며
 author: psymon
-pubDatetime: 2026-03-11T09:22:08Z
-modDatetime: 2026-03-11T09:22:08Z
+pubDatetime: 2026-03-11T09:22:08+09:00
+modDatetime: 2026-03-11T09:22:08+09:00
 slug: ai-development-begins
 featured: true
 draft: false
