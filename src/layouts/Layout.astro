@@ -1,7 +1,7 @@
 ---
 import { Font } from "astro:assets";
 import { ClientRouter } from "astro:transitions";
-import { PUBLIC_GOOGLE_SITE_VERIFICATION, PUBLIC_GA_MEASUREMENT_ID, PUBLIC_UMAMI_HOST, PUBLIC_UMAMI_WEBSITE_ID } from "astro:env/client";
+import { PUBLIC_GOOGLE_SITE_VERIFICATION, PUBLIC_GA_MEASUREMENT_ID } from "astro:env/client";
 import { SITE } from "@/config";
 import "@/styles/global.css";
 
@@ -225,18 +225,6 @@ const structuredData = isArticle
             gtag('js', new Date());
             gtag('config', '${PUBLIC_GA_MEASUREMENT_ID}');
           `}
-        />
-      )
-    }
-
-    <!-- Umami Analytics -->
-    {
-      PUBLIC_UMAMI_HOST && PUBLIC_UMAMI_WEBSITE_ID && (
-        <script
-          is:inline
-          defer
-          src={`${PUBLIC_UMAMI_HOST}/script.js`}
-          data-website-id={PUBLIC_UMAMI_WEBSITE_ID}
         />
       )
     }

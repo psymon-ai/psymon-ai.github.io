@@ -28,9 +28,6 @@ jobs:
       PUBLIC_GISCUS_CATEGORY: General
       PUBLIC_GISCUS_CATEGORY_ID: DIC_kwDOSFydG84C7cVs
       PUBLIC_GA_MEASUREMENT_ID: G-DFDREEHM9Z
-      PUBLIC_UMAMI_HOST: https://cloud.umami.is
-      PUBLIC_UMAMI_WEBSITE_ID: ${{ vars.PUBLIC_UMAMI_WEBSITE_ID }}
-      UMAMI_API_KEY: ${{ secrets.UMAMI_API_KEY }}
 
     steps:
       - name: Checkout
@@ -57,9 +54,6 @@ jobs:
           echo "PUBLIC_GISCUS_CATEGORY=${PUBLIC_GISCUS_CATEGORY}" >> .env
           echo "PUBLIC_GISCUS_CATEGORY_ID=${PUBLIC_GISCUS_CATEGORY_ID}" >> .env
           echo "PUBLIC_GA_MEASUREMENT_ID=${PUBLIC_GA_MEASUREMENT_ID}" >> .env
-          echo "PUBLIC_UMAMI_HOST=${PUBLIC_UMAMI_HOST}" >> .env
-          echo "PUBLIC_UMAMI_WEBSITE_ID=${PUBLIC_UMAMI_WEBSITE_ID}" >> .env
-          echo "UMAMI_API_KEY=${UMAMI_API_KEY}" >> .env
 
       - name: Build with Astro
         run: pnpm run build

@@ -1,0 +1,29 @@
+---
+import IconClock from "@/assets/icons/IconClock.svg";
+import { getReadingMinutes } from "@/utils/readingTime";
+
+type Props = {
+  body?: string;
+  class?: string;
+  size?: "sm" | "lg";
+};
+
+const { body = "", size = "sm", class: className = "" } = Astro.props;
+const minutes = getReadingMinutes(body);
+---
+
+<span
+  class:list={["inline-flex items-center gap-x-1 opacity-80", className]}
+  aria-label={`약 ${minutes}분 읽기`}
+>
+  <IconClock
+    class:list={[
+      "inline-block size-5 min-w-4",
+      { "scale-90": size === "sm" },
+    ]}
+  />
+  <span class:list={["text-sm", { "sm:text-base": size === "lg" }]}>
+    약 {minutes}분 읽기
+  </span>
+</span>
+

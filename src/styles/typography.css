@@ -89,6 +89,64 @@
       @apply opacity-75;
     }
 
+    sup:has(a[data-footnote-ref]) {
+      @apply mx-0.5;
+      vertical-align: super;
+      line-height: 0;
+    }
+
+    a[data-footnote-ref] {
+      @apply rounded-full px-1 text-xs font-bold text-accent no-underline;
+      background: color-mix(in srgb, var(--accent) 12%, transparent);
+    }
+
+    .footnotes {
+      @apply mt-16 rounded-lg border border-border px-5 py-4 text-sm;
+      border-left: 4px solid var(--color-accent);
+      background: color-mix(in srgb, var(--muted) 34%, transparent);
+      color: color-mix(in srgb, var(--foreground) 78%, transparent);
+    }
+
+    .footnotes::before {
+      content: "각주";
+      display: block;
+      margin-bottom: 0.75rem;
+      color: var(--color-foreground);
+      font-family: var(--font-hahmlet);
+      font-size: 1rem;
+      font-weight: 800;
+    }
+
+    .footnotes h2 {
+      @apply sr-only;
+    }
+
+    .footnotes ol {
+      @apply my-0 pl-5;
+    }
+
+    .footnotes li {
+      @apply my-2 pl-1 marker:text-accent;
+    }
+
+    .footnotes li:target {
+      @apply rounded-md;
+      background: color-mix(in srgb, var(--accent) 9%, transparent);
+    }
+
+    .footnotes p {
+      @apply my-0;
+      line-height: 1.75;
+    }
+
+    .footnotes a {
+      @apply text-accent underline-offset-4;
+    }
+
+    .footnotes a[data-footnote-backref] {
+      @apply ml-1 no-underline;
+    }
+
     figure.image-with-caption {
       @apply my-6;
     }

@@ -10,7 +10,7 @@ import ShareLinks from "@/components/ShareLinks.astro";
 import BackButton from "@/components/BackButton.astro";
 import BackToTopButton from "@/components/BackToTopButton.astro";
 import Giscus from "@/components/Giscus.astro";
-import ViewCount from "@/components/ViewCount.astro";
+import ReadingTime from "@/components/ReadingTime.astro";
 import { getPath } from "@/utils/getPath";
 import { slugifyStr } from "@/utils/slugify";
 import IconChevronLeft from "@/assets/icons/IconChevronLeft.svg";
@@ -166,7 +166,7 @@ if (hasSeriesNav) {
     <div class="my-2 flex items-center gap-2">
       <Datetime {pubDatetime} {modDatetime} {timezone} size="lg" />
       <span aria-hidden="true" class="opacity-50">·</span>
-      <ViewCount path={getPath(post.id, post.filePath)} size="lg" />
+      <ReadingTime body={post.body} size="lg" />
       <span
         aria-hidden="true"
         class:list={[

@@ -10,7 +10,6 @@ const GISCUS_REPO_ID = import.meta.env.PUBLIC_GISCUS_REPO_ID;
 const GISCUS_CATEGORY = import.meta.env.PUBLIC_GISCUS_CATEGORY;
 const GISCUS_CATEGORY_ID = import.meta.env.PUBLIC_GISCUS_CATEGORY_ID;
 
-// Check if all required environment variables are set
 const isConfigured = !!(
   GISCUS_REPO &&
   GISCUS_REPO_ID &&
@@ -21,31 +20,17 @@ const isConfigured = !!(
 
 {
   isConfigured ? (
-    <div id="giscus-container" class="giscus mt-12">
-      <script
-        is:inline
-        src="https://giscus.app/client.js"
-        data-repo={GISCUS_REPO}
-        data-repo-id={GISCUS_REPO_ID}
-        data-category={GISCUS_CATEGORY}
-        data-category-id={GISCUS_CATEGORY_ID}
-        data-mapping="pathname"
-        data-strict="0"
-        data-reactions-enabled="1"
-        data-emit-metadata="0"
-        data-input-position="top"
-        data-theme="preferred_color_scheme"
-        data-lang="ko"
-        crossorigin="anonymous"
-        async
-      />
-    </div>
+    <div
+      id="giscus-container"
+      class="giscus mt-12"
+      data-repo={GISCUS_REPO}
+      data-repo-id={GISCUS_REPO_ID}
+      data-category={GISCUS_CATEGORY}
+      data-category-id={GISCUS_CATEGORY_ID}
+    />
   ) : (
     <div class="mt-12 rounded border border-yellow-500 bg-yellow-50 p-4 text-yellow-800 dark:bg-yellow-900/20 dark:text-yellow-200">
-      <p>
-        Giscus 댓글 시스템이 설정되지 않았습니다. .env 파일에 환경 변수를
-        설정해주세요.
-      </p>
+      <p>Giscus 댓글 시스템이 설정되지 않았습니다. 환경 변수를 확인해 주세요.</p>
     </div>
   )
 }
@@ -58,50 +43,59 @@ const isConfigured = !!(
 
 <script is:inline>
   let observerInitialized = false;
+  const GISCUS_LIGHT_THEME = "light";
+  const GISCUS_DARK_THEME = "dark_dimmed";
+
+  function getGiscusTheme() {
+    const theme = document.documentElement.getAttribute("data-theme");
+    return theme === "dark" ? GISCUS_DARK_THEME : GISCUS_LIGHT_THEME;
+  }
+
+  function applyGiscusTheme() {
+    const iframe = document.querySelector("iframe.giscus-frame");
+    if (!iframe) return;
+
+    iframe.contentWindow.postMessage(
+      { giscus: { setConfig: { theme: getGiscusTheme() } } },
+      "https://giscus.app"
+    );
+  }
 
   function renderGiscus() {
     const container = document.getElementById("giscus-container");
     if (!container) return;
 
-    // 중복 방지
-    if (container.firstChild) return;
+    if (container.querySelector("iframe.giscus-frame, script")) return;
+
+    const { repo, repoId, category, categoryId } = container.dataset;
+    if (!repo || !repoId || !category || !categoryId) return;
 
     const script = document.createElement("script");
     script.src = "https://giscus.app/client.js";
     script.async = true;
+    script.crossOrigin = "anonymous";
 
-    script.setAttribute("data-repo", container.dataset.repo);
-    script.setAttribute("data-repo-id", container.dataset.repoId);
-    script.setAttribute("data-category", container.dataset.category);
-    script.setAttribute("data-category-id", container.dataset.categoryId);
+    script.setAttribute("data-repo", repo);
+    script.setAttribute("data-repo-id", repoId);
+    script.setAttribute("data-category", category);
+    script.setAttribute("data-category-id", categoryId);
     script.setAttribute("data-mapping", "pathname");
     script.setAttribute("data-strict", "0");
     script.setAttribute("data-reactions-enabled", "1");
     script.setAttribute("data-emit-metadata", "0");
     script.setAttribute("data-input-position", "top");
-    script.setAttribute("data-theme", "preferred_color_scheme");
+    script.setAttribute("data-theme", getGiscusTheme());
     script.setAttribute("data-lang", "ko");
-    script.crossOrigin = "anonymous";
 
     container.appendChild(script);
+    window.setTimeout(applyGiscusTheme, 500);
   }
 
   function setupGiscusDarkMode() {
     if (observerInitialized) return;
     observerInitialized = true;
 
-    const observer = new MutationObserver(() => {
-      const theme = document.documentElement.getAttribute("data-theme");
-      const giscusTheme = theme === "dark" ? "dark" : "light";
-
-      const iframe = document.querySelector("iframe.giscus-frame");
-      if (iframe) {
-        iframe.contentWindow.postMessage(
-          { giscus: { setConfig: { theme: giscusTheme } } },
-          "https://giscus.app"
-        );
-      }
-    });
+    const observer = new MutationObserver(applyGiscusTheme);
 
     observer.observe(document.documentElement, {
       attributes: true,
@@ -112,11 +106,9 @@ const isConfigured = !!(
   function initGiscus() {
     renderGiscus();
     setupGiscusDarkMode();
+    applyGiscusTheme();
   }
 
-  // 최초 로드
   document.addEventListener("DOMContentLoaded", initGiscus);
-
-  // SPA 이동 대응 (🔥 핵심)
   document.addEventListener("astro:page-load", initGiscus);
 </script>

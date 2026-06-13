@@ -109,21 +109,6 @@ export default defineConfig({
         context: "client",
         optional: true,
       }),
-      PUBLIC_UMAMI_HOST: envField.string({
-        access: "public",
-        context: "client",
-        optional: true,
-      }),
-      PUBLIC_UMAMI_WEBSITE_ID: envField.string({
-        access: "public",
-        context: "client",
-        optional: true,
-      }),
-      UMAMI_API_KEY: envField.string({
-        access: "secret",
-        context: "server",
-        optional: true,
-      }),
     },
   },
   experimental: {
