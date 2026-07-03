@@ -10,6 +10,7 @@ import { pluginLineNumbers } from '@expressive-code/plugin-line-numbers';
 import remarkMath from 'remark-math';
 import rehypeKatex from 'rehype-katex';
 import rehypeImageCaption from './src/utils/rehype/imageCaption';
+import rehypeLeadingSpaceInlineCode from './src/utils/rehype/leadingSpaceInlineCode';
 import { remarkFixCjkBold } from './src/utils/remark/remarkFixCjkBold';
 
 // https://astro.build/config
@@ -66,6 +67,7 @@ export default defineConfig({
     ],
     rehypePlugins: [
       rehypeKatex,
+      rehypeLeadingSpaceInlineCode,
       rehypeImageCaption,
       [rehypeExternalLinks, { target: "_blank", rel: ["noopener", "noreferrer"] }],
     ],

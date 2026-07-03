@@ -250,6 +250,16 @@
       font-family: var(--font-ibm-plex-sans), monospace;
     }
 
+    :not(pre) > code {
+      white-space: break-spaces;
+    }
+
+    :not(pre) > code .code-leading-space {
+      display: inline-block;
+      width: 2ch;
+      white-space: pre;
+    }
+
     .astro-code code {
       @apply flex-[1_0_100%] bg-inherit p-0;
       font-family: var(--font-ibm-plex-sans), monospace;
