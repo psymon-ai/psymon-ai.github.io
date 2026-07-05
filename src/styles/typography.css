@@ -256,7 +256,7 @@
 
     :not(pre) > code .code-leading-space {
       display: inline-block;
-      width: 2ch;
+      width: 1ch;
       white-space: pre;
     }
 
