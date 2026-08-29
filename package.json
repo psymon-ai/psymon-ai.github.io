@@ -5,7 +5,8 @@
   "packageManager": "pnpm@10.11.1",
   "scripts": {
     "dev": "astro dev",
-    "build": "astro check && astro build && pagefind --site dist && node -e \"require('fs').cpSync('dist/pagefind','public/pagefind',{recursive:true,force:true})\"",
+    "build": "astro check && astro build && pnpm run seo:check && pagefind --site dist && node -e \"require('fs').cpSync('dist/pagefind','public/pagefind',{recursive:true,force:true})\"",
+    "seo:check": "node scripts/check-seo.mjs",
     "preview": "astro preview",
     "sync": "astro sync",
     "astro": "astro",

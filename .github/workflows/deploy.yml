@@ -28,6 +28,7 @@ jobs:
       PUBLIC_GISCUS_CATEGORY: General
       PUBLIC_GISCUS_CATEGORY_ID: DIC_kwDOSFydG84C7cVs
       PUBLIC_GA_MEASUREMENT_ID: G-DFDREEHM9Z
+      PUBLIC_GOOGLE_SITE_VERIFICATION: ${{ secrets.PUBLIC_GOOGLE_SITE_VERIFICATION }}
 
     steps:
       - name: Checkout
@@ -54,6 +55,7 @@ jobs:
           echo "PUBLIC_GISCUS_CATEGORY=${PUBLIC_GISCUS_CATEGORY}" >> .env
           echo "PUBLIC_GISCUS_CATEGORY_ID=${PUBLIC_GISCUS_CATEGORY_ID}" >> .env
           echo "PUBLIC_GA_MEASUREMENT_ID=${PUBLIC_GA_MEASUREMENT_ID}" >> .env
+          echo "PUBLIC_GOOGLE_SITE_VERIFICATION=${PUBLIC_GOOGLE_SITE_VERIFICATION}" >> .env
 
       - name: Build with Astro
         run: pnpm run build

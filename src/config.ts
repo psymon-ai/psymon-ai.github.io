@@ -1,7 +1,9 @@
 export const SITE = {
   website: "https://psymon-ai.github.io", // GitHub Pages URL
   author: "psymon",
+  authorName: "박성열",
   profile: "https://github.com/psymon-ai",
+  sameAs: ["https://github.com/psymon-ai", "https://huggingface.co/psymon"],
   desc: "로컬 AI와 LLM을 직접 만들고, 이해하는 과정을 기록한 psymon의 개발 블로그입니다.",
   title: "psymon-ai",
   ogImage: "About-me.png", // /public 폴더 기준 파일명

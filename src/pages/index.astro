@@ -17,14 +17,30 @@ const posts = await getCollection("blog");
 const sortedPosts = getSortedPosts(posts);
 const featuredPosts = sortedPosts.filter(({ data }) => data.featured);
 const recentPosts = sortedPosts.filter(({ data }) => !data.featured);
+const homeTitle = "로컬 AI와 LLM 개발 기록 | psymon-ai";
+const homeDescription =
+  "한국어 토크나이저, 소형 언어 모델, 온디바이스 AI를 직접 만들고 검증한 과정을 기록하는 개발 블로그입니다.";
 ---
 
-<Layout>
+<Layout
+  title={homeTitle}
+  schemaTitle={homeTitle}
+  description={homeDescription}
+  canonicalURL={`${SITE.website}/`}
+  keywords={[
+    "로컬 AI",
+    "LLM",
+    "언어 모델",
+    "한국어 LLM",
+    "한국어 토크나이저",
+    "온디바이스 AI",
+  ]}
+>
   <Header />
   <main id="main-content" data-layout="index" class="app-layout">
     <section id="hero" class:list={["pt-8 pb-6", "border-b border-border"]}>
       <h1 class="my-4 inline-block text-4xl font-bold sm:my-8 sm:text-4xl">
-        어서 오세요
+        로컬 AI와 LLM을 직접 만드는 기록
       </h1>
       <a
         target="_blank"
@@ -42,12 +58,13 @@ const recentPosts = sortedPosts.filter(({ data }) => !data.featured);
       </a>
 
       <p>
-        개발자, 창업자, 혹은 글 쓰는 사람 박성열입니다. 이 블로그는 제가 배운
-        지식과 경험을 기록하기 위해 만들었습니다. 제 안에서 나온 글들이라 크게
-        대단한 것은 없습니다만, 누군가에게 도움이 될 수 있다면 좋겠습니다.
+        개발자 박성열입니다. 한국어 토크나이저와 소형 언어 모델, 온디바이스 AI를
+        직접 만들고 있습니다. 결과만 정리하기보다 어떤 가설을 세웠고, 어디서
+        틀렸으며, 무엇을 다시 확인했는지까지 기록합니다.
       </p>
       <p class="mt-2">
-        궁금한 점이 있거나 제안할 내용이 있다면 언제든
+        머신러닝 기초부터 한국어 LLM 실험과 공개 모델 개발기까지 차근차근
+        쌓아가고 있습니다. 궁금한 점이나 제안할 내용이 있다면 언제든
         <LinkButton
           class="underline decoration-dashed underline-offset-4 hover:text-accent"
           href="mailto:psymon.dev@gmail.com"
